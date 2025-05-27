@@ -67,3 +67,11 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
           AWS_DEFAULT_REGION: ap-south-1
+
+      - name: Upload kubeconfig artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v3
+        with:
+          name: kubeconfig
+          path: terraform/environments/dev/kubeconfig
+ 
