@@ -70,7 +70,7 @@ jobs:
 
       - name: Upload kubeconfig artifact
         if: github.event_name == 'workflow_dispatch'
-        uses: actions/upload-artifact@v3
+        uses: uses: actions/upload-artifact@latest
         with:
           name: kubeconfig
           path: terraform/environments/dev/kubeconfig
