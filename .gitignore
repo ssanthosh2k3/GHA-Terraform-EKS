@@ -1,0 +1,40 @@
+# Node-related (if you're using any npm-based tooling)
+node_modules/
+dist/
+build/
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment/config
+.env
+.env.*  # in case you use environment-specific env files
+
+# Docker
+*.tar
+*.pid
+
+# Kubernetes
+*.kubeconfig
+.kube/
+*.yaml~    # backup YAML files
+
+# VSCode settings (optional)
+.vscode/
+
+# Git
+.gitignore
+
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+*.log
