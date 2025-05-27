@@ -74,4 +74,3 @@ jobs:
         with:
           name: kubeconfig
           path: terraform/environments/dev/kubeconfig
- 
