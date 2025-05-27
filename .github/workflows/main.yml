@@ -1,0 +1,22 @@
+name: AWS Connectivity Check
+
+on:
+  workflow_dispatch:  # Manually trigger from GitHub UI
+
+jobs:
+  check-aws:
+    name: Verify AWS Access from GitHub Actions
+    runs-on: ubuntu-latest
+    environment: POC  # 👈 This tells GitHub to use the "POC" environment secrets
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        run: |
+          aws sts get-caller-identity
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1
