@@ -1,4 +1,4 @@
-name: Terraform Init and Plan
+name: Terraform Init, Plan and Apply
 
 on:
   push:
@@ -7,11 +7,11 @@ on:
     paths:
       - 'terraform/environments/dev/**'
       - 'terraform/modules/**'
-  workflow_dispatch:  # manual trigger
+  workflow_dispatch:  # manual trigger from GitHub UI
 
 jobs:
   terraform:
-    name: Terraform Init and Plan (dev)
+    name: Terraform Workflow (dev)
     runs-on: ubuntu-latest
     environment: POC
 
@@ -28,7 +28,7 @@ jobs:
         with:
           terraform_version: 1.12.1
 
-      - name: Terraform Init
+      - name: Terraform Init (with backend)
         run: terraform init -reconfigure
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
@@ -37,6 +37,14 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -var-file=terraform.tfvars
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1
+
+      - name: Terraform Apply
+        if: github.event_name == 'workflow_dispatch'  # only manual run
+        run: terraform apply -auto-approve -var-file=terraform.tfvars
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
