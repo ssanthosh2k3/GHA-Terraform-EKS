@@ -1,14 +1,35 @@
+name: Terraform Init and Plan
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/environments/dev/**'
+      - 'terraform/modules/**'
+  workflow_dispatch:     # This enables manual trigger from GitHub UI
+
 jobs:
   terraform:
+    name: Terraform Init and Plan (dev)
     runs-on: ubuntu-latest
+    environment: POC
+
     defaults:
       run:
         working-directory: terraform/environments/dev
+
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: List files in terraform/environments/dev
         run: ls -la
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.1
 
       - name: Terraform Init
         run: terraform init
