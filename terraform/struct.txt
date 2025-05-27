@@ -1,0 +1,16 @@
+├── environments
+│   ├── dev
+│   │   ├── main.tf
+│   │   ├── terraform.tfvars
+│   │   └── backend.tf
+│   └── prod
+│       ├── main.tf
+│       ├── terraform.tfvars
+│       └── backend.tf
+├── modules
+│   └── eks
+│       ├── cluster.tf
+│       ├── workers.tf
+│       ├── outputs.tf
+│       └── variables.tf
+└── versions.tf
