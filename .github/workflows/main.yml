@@ -53,7 +53,7 @@ jobs:
       - name: Get EKS Cluster name from Terraform output
         if: github.event_name == 'workflow_dispatch'  # only manual run
         id: eks_name
-        run: echo "::set-output name=cluster_name::$(terraform output -raw cluster_name)"
+        run: echo "cluster_name=$(terraform output -raw cluster_name)" >> $GITHUB_OUTPUT
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
