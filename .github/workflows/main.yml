@@ -50,16 +50,20 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
           AWS_DEFAULT_REGION: ap-south-1
 
-            - name: Get EKS Cluster name from Terraform output
+      - name: Get EKS Cluster name from Terraform output
+        if: github.event_name == 'workflow_dispatch'  # only manual run
         id: eks_name
         run: echo "::set-output name=cluster_name::$(terraform output -raw cluster_name)"
-      
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1
+
       - name: Configure kubeconfig
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch'  # only manual run
         run: |
           aws eks update-kubeconfig --region ap-south-1 --name ${{ steps.eks_name.outputs.cluster_name }} --kubeconfig ./kubeconfig
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
           AWS_DEFAULT_REGION: ap-south-1
-
