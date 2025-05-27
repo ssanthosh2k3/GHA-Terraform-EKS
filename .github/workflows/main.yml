@@ -7,12 +7,13 @@ on:
     paths:
       - 'terraform/environments/dev/**'
       - 'terraform/modules/**'
+  workflow_dispatch:  # 👈 Manual trigger from GitHub UI
 
 jobs:
   terraform:
     name: Terraform Init and Plan (dev)
     runs-on: ubuntu-latest
-    environment: POC  # Use your environment secrets
+    environment: POC
 
     defaults:
       run:
